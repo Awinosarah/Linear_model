@@ -23,5 +23,5 @@ This is a CHAP-compatible external model for predicting Severe Acute Malnutritio
 from model import train_model
 import pandas as pd
 
-df = pd.read_csv("your_sam_training_data.csv")
+df = pd.read_csv("SAM_training_data.csv")
 train_model(df, target="108-NA01b1_2019. No. of new SAM admissions in ITC")
