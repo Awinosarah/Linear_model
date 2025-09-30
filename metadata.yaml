@@ -1,0 +1,74 @@
+name: "SAM Admissions Predictor"
+code: "sam-predictor-v1"
+description: "A supervised learning model to predict Severe Acute Malnutrition (SAM) admissions. It uses climate and disease indicators to forecast admissions and classifies risk levels for spatial mapping and alert systems."
+version: "1.0.0"
+author: "HISP Uganda"
+type: "supervised"
+
+# This section maps the model's internal variables to DHIS2 data elements.
+# The keys must match the exact variable names used in your model.py.
+# The values are human-readable labels for the DHIS2 ML Modeling app.
+input_variables:
+  - name: CCH - Air temperature (ERA5-Land)
+    label: "Air Temperature"
+    type: "numeric"
+  - name: CCH - Precipitation (CHIRPS)
+    label: "Precipitation"
+    type: "numeric"
+  - name: CCH - Relative humidity (ERA5-Land)
+    label: "Relative Humidity"
+    type: "numeric"
+  - name: 108-CD06a. Pneumonia - Cases
+    label: "Pneumonia Cases"
+    type: "numeric"
+  - name: 108-EP01a1. Malaria Total - Cases
+    label: "Malaria Cases"
+    type: "numeric"
+  - name: 108-NA01b1_2019. No. of new SAM admissions in ITC_lag1
+    label: "SAM Admissions Lag 1"
+    type: "numeric"
+  - name: 108-NA01b1_2019. No. of new SAM admissions in ITC_lag2
+    label: "SAM Admissions Lag 2"
+    type: "numeric"
+  - name: 108-NA01b1_2019. No. of new SAM admissions in ITC_lag3
+    label: "SAM Admissions Lag 3"
+    type: "numeric"
+  - name: 108-NA01b1_2019. No. of new SAM admissions in ITC_lag4
+    label: "SAM Admissions Lag 4"
+    type: "numeric"
+  - name: 108-NA01b1_2019. No. of new SAM admissions in ITC_lag5
+    label: "SAM Admissions Lag 5"
+    type: "numeric"
+  - name: 108-NA01b1_2019. No. of new SAM admissions in ITC_lag6
+    label: "SAM Admissions Lag 6"
+    type: "numeric"
+
+# The target variable that the model is designed to predict.
+target_variable:
+  name: 108-NA01b1_2019. No. of new SAM admissions in ITC
+  label: "SAM Admissions"
+  type: "numeric"
+
+# This section defines the outputs the model will produce.
+
+# The name and label are displayed in the DHIS2 ML app.
+output_variables:
+  - name: predicted-sam-admissions
+    label: "Predicted SAM Admissions"
+    type: "numeric"
+    description: "Model's forecast for the number of new SAM admissions."
+  - name: sam-risk-level
+    label: "SAM Risk Level"
+    type: "text"
+    description: "Risk classification (Low, Medium, High, Very High) based on percentile thresholds."
+
+# Optional, a user-friendly configuration for the model.
+# This allows users to fine-tune model parameters directly from the DHIS2 app.
+configuration_parameters:
+  - name: lag_count
+    label: "Number of Lags"
+    description: "The number of previous months of SAM admission data to include as features."
+    type: "integer"
+    default: 6
+    min: 1
+    max: 12
